@@ -7,7 +7,7 @@ function Accueil() {
 
   return (
     <div className="min-h-screen bg-[#f7f2e7] text-[#3b2f2f] flex flex-col items-center justify-center p-10 font-serif">
-      <h1 className="text-6xl font-bold mb-6 tracking-widest text-center text-[#2c221c] drop-shadow-md">
+      <h1 className="text-5xl font-bold mb-6 tracking-widest text-center text-[#2c221c] drop-shadow-md">
         {intl.formatMessage({
           id: 'accueil.titre',
           defaultMessage: 'Chroniques du passé',

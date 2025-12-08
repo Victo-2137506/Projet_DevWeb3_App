@@ -65,7 +65,7 @@ function Histoire() {
   }, [pays, siecle]);
 
   return (
-    <div className="min-h-screen bg-[#f7f2e7] text-[#3b2f2f] flex flex-col items-center p-10 font-serif">
+    <div className="min-h-screen bg-[#f7f2e7] text-[#3b2f2f] font-serif p-5 md:p-10 flex flex-col items-center">
       <h1 className="text-5xl font-bold mb-6 tracking-widest drop-shadow-md">
         {intl.formatMessage({
           id: 'histoire.titre',
@@ -82,15 +82,15 @@ function Histoire() {
       </p>
 
       {/* Filtres */}
-      <div className="w-full max-w-3xl flex flex-col gap-4 mb-8">
-        <div className="flex gap-4">
+      <div className="w-full max-w-3xl flex flex-col gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row gap-4">
           {/* Filtre pays */}
           <input
             type="text"
             placeholder="Pays"
             value={pays}
             onChange={(e) => setPays(e.target.value)}
-            className="flex-1 px-4 py-2 rounded-lg border border-gray-300"
+            className="flex-1 p-3 rounded-lg border shadow-sm bg-[#faf5eb] focus:ring focus:ring-[#c7b299]"
           />
 
           {/* Filtre siècle */}
@@ -99,7 +99,7 @@ function Histoire() {
             placeholder="Siècle (ex: 18)"
             value={siecle}
             onChange={(e) => setSiecle(e.target.value)}
-            className="flex-1 px-4 py-2 rounded-lg border border-gray-300"
+            className="flex-1 p-3 rounded-lg border shadow-sm bg-[#faf5eb] focus:ring focus:ring-[#c7b299]"
           />
         </div>
       </div>
