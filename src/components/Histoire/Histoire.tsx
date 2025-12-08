@@ -108,7 +108,7 @@ function Histoire() {
       {token && (
         <button
           onClick={() => navigate('/histoire/ajouter')}
-          className="mb-6 px-6 py-2 bg-[#5c3d2e] text-white rounded-xl hover:bg-[#5a4747] transition-colors"
+          className="mb-6 px-6 py-2 bg-[#3b2f2f] text-white rounded-xl hover:bg-[#5a4747] transition-colors"
         >
           Ajouter une personne historique
         </button>

@@ -21,7 +21,7 @@ export default function Menu({ changerLangue }: MenuProps) {
 
   return (
     <>
-      <header className="w-full bg-[#5c3d2e] text-[#f7f2e7] shadow-md p-4 flex justify-between items-center font-serif">
+      <header className="w-full bg-[#3b2f2f] text-[#f7f2e7] shadow-md p-4 flex justify-between items-center font-serif">
         <h1 className="text-2xl font-bold">Chroniques du passé</h1>
         <nav className="space-x-6 flex items-center">
           <a href="/" className="hover:text-[#f0d9b5] transition">
