@@ -5,6 +5,10 @@ import { LoginContext } from '../contexts/LoginContext';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useIntl } from 'react-intl';
 
+// Le tailwindCSS est produit par ChatGPT
+
+// Interface qui représente un personnage historique
+// Contrairement au fichier Histoire.tsx, celle-ci affiche toutes les variables de la personne historique
 interface IHistoire {
   _id: string;
   nom: string;
@@ -18,17 +22,25 @@ interface IHistoire {
 }
 
 function HistoireDetail() {
+  // Récupération de l'id
   const { id } = useParams();
+  // Récupère le token depuis le LoginContext
   const { token } = useContext(LoginContext);
+  // Hook pour la navigation
   const navigate = useNavigate();
+  // Hook pour l'intertionalisation
   const intl = useIntl();
 
+  // Stock le personnage historique depuis l'API
   const [personnage, setPersonnage] = useState<IHistoire | null>(null);
 
+  // Chargement des données du personnage historique
   useEffect(() => {
+    // On ne fait rien si il y a pas de id ou de token
     if (!id || !token) return;
     axios
       .get(
+        // Appel l'API pour récupérer un personnage historique par son id
         `https://histoireapi-e8czf4c8ehcvdgcw.canadacentral-01.azurewebsites.net/api/histoire/${id}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
@@ -39,6 +51,7 @@ function HistoireDetail() {
   const handleDelete = async () => {
     if (!token || !id) return;
 
+    // Confirmation avant suppression
     const confirmDelete = window.confirm(
       intl.formatMessage({
         id: 'histoire.confirmer.suppression',
@@ -49,6 +62,7 @@ function HistoireDetail() {
 
     try {
       await axios.delete(
+        // Appel l'api pour supprimer le personnage
         `https://histoireapi-e8czf4c8ehcvdgcw.canadacentral-01.azurewebsites.net/api/histoire/supprimer/${id}`,
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -58,6 +72,7 @@ function HistoireDetail() {
           defaultMessage: 'Personnage supprimé avec succès.',
         }),
       );
+      // Retourne à la page Histoire
       navigate('/histoire');
     } catch (error) {
       console.error('Erreur lors de la suppression', error);
@@ -82,8 +97,10 @@ function HistoireDetail() {
 
   return (
     <div className="min-h-screen bg-[#f7f2e7] text-[#3b2f2f] flex flex-col items-center p-10 font-serif">
+      {/* Nom du personnage */}
       <h1 className="text-4xl font-bold mb-6">{personnage.nom}</h1>
 
+      {/* Carte contenant les informations */}
       <div className="bg-white p-6 rounded-xl shadow-md w-full max-w-lg">
         <p>
           <strong>
@@ -92,9 +109,10 @@ function HistoireDetail() {
               defaultMessage: 'Pays',
             })}
             :
-          </strong>{' '}
+          </strong>
           {personnage.pays}
         </p>
+
         <p>
           <strong>
             {intl.formatMessage({
@@ -102,9 +120,11 @@ function HistoireDetail() {
               defaultMessage: 'Naissance',
             })}
             :
-          </strong>{' '}
+          </strong>
           {new Date(personnage.naissance).toLocaleDateString()}
         </p>
+
+        {/* Affiché uniquement si la date de mort existe */}
         {personnage.mort && (
           <p>
             <strong>
@@ -113,10 +133,11 @@ function HistoireDetail() {
                 defaultMessage: 'Mort',
               })}
               :
-            </strong>{' '}
+            </strong>
             {new Date(personnage.mort).toLocaleDateString()}
           </p>
         )}
+
         <p>
           <strong>
             {intl.formatMessage({
@@ -135,6 +156,7 @@ function HistoireDetail() {
                 defaultMessage: 'Non',
               })}
         </p>
+
         <p>
           <strong>
             {intl.formatMessage({
@@ -142,9 +164,10 @@ function HistoireDetail() {
               defaultMessage: 'Siècle',
             })}
             :
-          </strong>{' '}
+          </strong>
           {personnage.siecle}
         </p>
+
         <p>
           <strong>
             {intl.formatMessage({
@@ -152,10 +175,11 @@ function HistoireDetail() {
               defaultMessage: 'Rôle',
             })}
             :
-          </strong>{' '}
+          </strong>
           {personnage.role}
         </p>
 
+        {/* Liste des faits marquants */}
         {personnage.faitsMarquants.length > 0 && (
           <ul className="list-disc list-inside mt-2">
             {personnage.faitsMarquants.map((fait, i) => (
@@ -164,47 +188,27 @@ function HistoireDetail() {
           </ul>
         )}
 
+        {/* Boutons d’actions */}
         <div className="flex gap-4 mt-6">
           <button
             onClick={() => navigate(`/histoire/modifier/${personnage._id}`)}
             className="text-blue-600 hover:text-blue-800 flex items-center gap-2"
-            title={intl.formatMessage({
-              id: 'histoire.bouton.modifier',
-              defaultMessage: 'Modifier',
-            })}
           >
-            <FaEdit />{' '}
-            {intl.formatMessage({
-              id: 'histoire.bouton.modifier',
-              defaultMessage: 'Modifier',
-            })}
+            <FaEdit /> Modifier
           </button>
+
           <button
             onClick={handleDelete}
             className="text-red-600 hover:text-red-800 flex items-center gap-2"
-            title={intl.formatMessage({
-              id: 'histoire.bouton.supprimer',
-              defaultMessage: 'Supprimer',
-            })}
           >
-            <FaTrash />{' '}
-            {intl.formatMessage({
-              id: 'histoire.bouton.supprimer',
-              defaultMessage: 'Supprimer',
-            })}
+            <FaTrash /> Supprimer
           </button>
+
           <button
             onClick={() => navigate('/histoire')}
             className="text-gray-600 hover:text-gray-800"
-            title={intl.formatMessage({
-              id: 'histoire.bouton.retour',
-              defaultMessage: 'Retour',
-            })}
           >
-            {intl.formatMessage({
-              id: 'histoire.bouton.retour',
-              defaultMessage: 'Retour',
-            })}
+            Retour
           </button>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { createContext, useEffect, useState } from 'react';
 
+// Le code est inspiré des notes de cours : https://web3.profinfo.ca/authentification/#authentification
+
 export type LoginContextType = {
   isLoggedIn: boolean;
   token: string;
@@ -23,6 +25,7 @@ export default function LoginProvider(props: any) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Token récupérer dans le localStorage
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       setToken(storedToken);
@@ -46,6 +49,7 @@ export default function LoginProvider(props: any) {
         const { token } = response.data;
         console.log(token);
         if (token) {
+          // Sauvegarde du token pour conserver la session
           localStorage.setItem('token', token);
           setIsLoggedIn(true);
           setToken(token);
@@ -61,6 +65,7 @@ export default function LoginProvider(props: any) {
   function logout() {
     setToken('');
     setIsLoggedIn(false);
+    // Supprime le token lors de la déconnexion
     localStorage.removeItem('token');
   }
 

@@ -1,4 +1,5 @@
-//Le tailwindCSS est générer par ChatGPT
+// Le tailwindCSS est générer par ChatGPT
+// Le code est inspiré des notes de cours : https://web3.profinfo.ca/authentification/#authentification
 
 import { useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
@@ -9,8 +10,10 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [erreur, setErreur] = useState('');
+  // Hook pour la navigation
   const navigate = useNavigate();
   const { login, isLoggedIn } = useContext(LoginContext);
+  // Hook pour l'intertionalisation
   const intl = useIntl();
 
   async function performLogin() {

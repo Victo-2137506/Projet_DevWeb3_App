@@ -3,34 +3,45 @@ import { useNavigate } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { LoginContext } from '../contexts/LoginContext';
 
+// Le tailwindCSS est produit par ChatGPT
+// Pour la gestion du token, le code est inspiré des notes de cours : https://web3.profinfo.ca/authentification/
+
 function FormulaireAjout() {
+  // Récupère le token d'authentification depuis le LoginContext
   const { token } = useContext(LoginContext);
+  // Hook pour la navigation
   const navigate = useNavigate();
+  // Hook pour la traduction
   const intl = useIntl();
 
+  // États pour stocker les champs du formulaire
   const [nom, setNom] = useState('');
   const [pays, setPays] = useState('');
   const [naissance, setNaissance] = useState('');
   const [mort, setMort] = useState('');
-  const [vivant, setVivante] = useState(false);
   const [siecle, setSiecle] = useState<number | ''>('');
   const [role, setRole] = useState('');
   const [faitsMarquants, setFaitsMarquants] = useState<string[]>(['']);
   const [message, setMessage] = useState('');
 
+  // Met à jour un fait marquant à un index (Inspiré de Claude IA)
   const handleFaitChange = (index: number, value: string) => {
     const nouveauxFaits = [...faitsMarquants];
     nouveauxFaits[index] = value;
     setFaitsMarquants(nouveauxFaits);
   };
 
+  // Ajoute un champ de fait supplémentaire (Inspiré de Claude IA)
   const ajouterFait = () => setFaitsMarquants([...faitsMarquants, '']);
+  // Supprime un champ de fait selon l'index
   const supprimerFait = (index: number) =>
     setFaitsMarquants(faitsMarquants.filter((_, i) => i !== index));
 
+  // Gestion de l'envoi du formulaire
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Vérifie si l'utilisateur est connecté
     if (!token) {
       setMessage(
         intl.formatMessage({
@@ -42,6 +53,10 @@ function FormulaireAjout() {
       return;
     }
 
+    // Détermination implicite de vivant
+    const vivant = naissance && !mort;
+
+    // Corps de la requête envoyé à l'API
     const body = {
       histoire: {
         nom,
@@ -56,6 +71,7 @@ function FormulaireAjout() {
     };
 
     try {
+      // Requête POST vers l'API pour ajouter une personne historique
       const response = await fetch(
         `https://histoireapi-e8czf4c8ehcvdgcw.canadacentral-01.azurewebsites.net/api/histoire/ajouter`,
         {
@@ -67,10 +83,11 @@ function FormulaireAjout() {
           body: JSON.stringify(body),
         },
       );
-
+      // Si la requête a fontionné, retour à la liste des personnages historiques
       if (response.ok) {
         navigate('/histoire');
       } else {
+        // Sinon message d'erreur
         setMessage(
           intl.formatMessage({
             id: 'formulaire.erreur.ajout',
@@ -79,6 +96,7 @@ function FormulaireAjout() {
         );
       }
     } catch (error) {
+      // En cas erreur réseau
       console.error(error);
       setMessage(
         intl.formatMessage({
@@ -91,14 +109,17 @@ function FormulaireAjout() {
 
   return (
     <div className="min-h-screen bg-[#f7f2e7] text-[#3b2f2f] flex flex-col items-center justify-start p-10 font-serif">
+      {/* Titre de la page */}
       <h1 className="text-4xl font-bold mb-6">
         {intl.formatMessage({
           id: 'formulaire.titre.ajout',
           defaultMessage: 'Ajouter une personne historique',
         })}
       </h1>
+
+      {/* Formulaire */}
       <form className="w-full max-w-lg" onSubmit={handleSubmit}>
-        {/* Champs identiques au formulaire de modification */}
+        {/* Champ : nom */}
         <input
           type="text"
           placeholder={intl.formatMessage({
@@ -110,6 +131,8 @@ function FormulaireAjout() {
           required
           className="mb-2 p-2 border rounded w-full"
         />
+
+        {/* Champ : pays */}
         <input
           type="text"
           placeholder={intl.formatMessage({
@@ -121,39 +144,37 @@ function FormulaireAjout() {
           required
           className="mb-2 p-2 border rounded w-full"
         />
+
+        {/* Date de naissance */}
+        <label className="block mb-1 font-semibold">
+          {intl.formatMessage({
+            id: 'formulaire.label.naissance',
+            defaultMessage: 'Date de naissance',
+          })}
+        </label>
         <input
           type="date"
-          placeholder={intl.formatMessage({
-            id: 'formulaire.placeholder.naissance',
-            defaultMessage: 'Naissance',
-          })}
           value={naissance}
           onChange={(e) => setNaissance(e.target.value)}
           required
           className="mb-2 p-2 border rounded w-full"
         />
+
+        {/* Date de mort */}
+        <label className="block mb-1 font-semibold">
+          {intl.formatMessage({
+            id: 'formulaire.label.mort',
+            defaultMessage: 'Date de mort',
+          })}
+        </label>
         <input
           type="date"
-          placeholder={intl.formatMessage({
-            id: 'formulaire.placeholder.mort',
-            defaultMessage: 'Mort',
-          })}
           value={mort}
           onChange={(e) => setMort(e.target.value)}
           className="mb-2 p-2 border rounded w-full"
         />
-        <label className="flex items-center mb-2">
-          <input
-            type="checkbox"
-            checked={vivant}
-            onChange={(e) => setVivante(e.target.checked)}
-            className="mr-2"
-          />
-          {intl.formatMessage({
-            id: 'formulaire.label.vivant',
-            defaultMessage: 'Vivant ?',
-          })}
-        </label>
+
+        {/* Siècle */}
         <input
           type="number"
           placeholder={intl.formatMessage({
@@ -167,6 +188,8 @@ function FormulaireAjout() {
           required
           className="mb-2 p-2 border rounded w-full"
         />
+
+        {/* Rôle */}
         <input
           type="text"
           placeholder={intl.formatMessage({
@@ -177,6 +200,8 @@ function FormulaireAjout() {
           onChange={(e) => setRole(e.target.value)}
           className="mb-2 p-2 border rounded w-full"
         />
+
+        {/* Section des faits marquants */}
         <div className="mb-4">
           <h4 className="mb-2">
             {intl.formatMessage({
@@ -184,6 +209,8 @@ function FormulaireAjout() {
               defaultMessage: 'Faits marquants',
             })}
           </h4>
+
+          {/* Liste dynamique des faits */}
           {faitsMarquants.map((fait, index) => (
             <div key={index} className="flex gap-2 mb-1">
               <input
@@ -199,6 +226,8 @@ function FormulaireAjout() {
                 onChange={(e) => handleFaitChange(index, e.target.value)}
                 className="flex-1 p-2 border rounded"
               />
+
+              {/* Bouton supprimer un fait */}
               <button
                 type="button"
                 onClick={() => supprimerFait(index)}
@@ -211,6 +240,8 @@ function FormulaireAjout() {
               </button>
             </div>
           ))}
+
+          {/* Bouton ajouter un fait */}
           <button
             type="button"
             onClick={ajouterFait}
@@ -222,6 +253,8 @@ function FormulaireAjout() {
             })}
           </button>
         </div>
+
+        {/* Bouton d’envoi */}
         <button
           type="submit"
           className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-800"
@@ -231,6 +264,8 @@ function FormulaireAjout() {
             defaultMessage: 'Ajouter',
           })}
         </button>
+
+        {/* Affichage message d’erreur */}
         {message && <p className="mt-2 text-red-500">{message}</p>}
       </form>
     </div>

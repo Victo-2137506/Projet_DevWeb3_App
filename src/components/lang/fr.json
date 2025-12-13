@@ -10,6 +10,7 @@
   "histoire.titre": "Histoires du passé",
   "histoire.description": "Ici, tu pourras découvrir les chroniques et personnages historiques que tu souhaites explorer.",
   "histoire.bouton.ajouter": "Ajouter une personne historique",
+  "histoire.bouton.retour": "Retour",
   "histoire.chargement": "Chargement des personnages...",
   "histoire.confirmer.suppression": "Voulez-vous vraiment supprimer ce personnage ?",
   "histoire.erreur.suppression": "Impossible de supprimer ce personnage.",
@@ -23,6 +24,9 @@
   "histoire.label.role": "Rôle",
   "histoire.vivant.oui": "Oui",
   "histoire.vivant.non": "Non",
+  "histoire.pays": "Pays",
+  "histoire.siecle": "Siècle",
+  "histoire.ajouterPersonne": "Ajouter une personne historique",
 
   "login.titre": "Connexion",
   "login.description": "Accédez aux chroniques du passé",
@@ -52,5 +56,7 @@
   "formulaire.erreur.ajout": "Erreur lors de l'ajout de l'histoire.",
   "formulaire.erreur.modification": "Erreur lors de la modification de l'histoire.",
   "formulaire.erreur.reseau": "Erreur réseau, impossible d'ajouter l'histoire.",
-  "formulaire.erreur.reseau.modifier": "Erreur réseau, impossible de modifier l'histoire."
+  "formulaire.erreur.reseau.modifier": "Erreur réseau, impossible de modifier l'histoire.",
+  "formulaire.label.naissance": "Date de naissance",
+  "formulaire.label.mort": "Date de mort"
 }

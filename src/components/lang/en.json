@@ -1,4 +1,5 @@
 {
+  "traduction": "La traduction à été faite par ChatGPT",
   "accueil.titre": "Chronicles of the Past",
   "accueil.description": "Dive into the stories, characters and events that shaped history. Explore a universe inspired by old scrolls and ancient chronicles.",
   "accueil.citation": "Those who do not know history are doomed to repeat it. - George Santayana",
@@ -10,6 +11,7 @@
   "histoire.titre": "Stories of the Past",
   "histoire.description": "Here, you can discover the chronicles and historical figures you wish to explore.",
   "histoire.bouton.ajouter": "Add a historical person",
+  "histoire.bouton.retour": "Back",
   "histoire.chargement": "Loading characters...",
   "histoire.confirmer.suppression": "Do you really want to delete this character?",
   "histoire.erreur.suppression": "Unable to delete this character.",
@@ -23,6 +25,9 @@
   "histoire.label.role": "Role",
   "histoire.vivant.oui": "Yes",
   "histoire.vivant.non": "No",
+  "histoire.pays": "Country",
+  "histoire.siecle": "Century",
+  "histoire.ajouterPersonne": "Add a historical person",
 
   "login.titre": "Login",
   "login.description": "Access the chronicles of the past",
@@ -52,5 +57,7 @@
   "formulaire.erreur.ajout": "Error adding the story.",
   "formulaire.erreur.modification": "Error editing the story.",
   "formulaire.erreur.reseau": "Network error, unable to add the story.",
-  "formulaire.erreur.reseau.modifier": "Network error, unable to edit the story."
+  "formulaire.erreur.reseau.modifier": "Network error, unable to edit the story.",
+  "formulaire.label.naissance": "Date of birth",
+  "formulaire.label.mort": "Date of death"
 }
