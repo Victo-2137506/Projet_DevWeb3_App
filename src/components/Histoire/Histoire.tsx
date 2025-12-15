@@ -21,6 +21,7 @@ function Histoire() {
   const navigate = useNavigate();
   // Hook pour la traduction
   const intl = useIntl();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Stocker la liste des personnages renvoyés par l'API
   const [personnages, setPersonnages] = useState<IHistoire[]>([]);
@@ -38,10 +39,9 @@ function Histoire() {
     // Si aucun filtre n'est appliqué, récupere tout les personnages
     if (!pays && !siecle) {
       return axios
-        .get(
-          'https://histoireapi-e8czf4c8ehcvdgcw.canadacentral-01.azurewebsites.net/api/histoire/all',
-          { headers: { Authorization: `Bearer ${token}` } },
-        )
+        .get(`${API_URL}/api/histoire/all`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
         .then((res) => {
           setPersonnages(res.data.histoires);
           setLoading(false);
@@ -50,7 +50,7 @@ function Histoire() {
     }
 
     // Sinon récupere les personnages historiques filtrées
-    const url = `https://histoireapi-e8czf4c8ehcvdgcw.canadacentral-01.azurewebsites.net/api/histoire/filtre?pays=${pays}&siecle=${siecle}`;
+    const url = `${API_URL}/api/histoire/filtre?pays=${pays}&siecle=${siecle}`;
 
     axios
       .get(url, { headers: { Authorization: `Bearer ${token}` } })

@@ -30,6 +30,7 @@ function HistoireDetail() {
   const navigate = useNavigate();
   // Hook pour l'intertionalisation
   const intl = useIntl();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // Stock le personnage historique depuis l'API
   const [personnage, setPersonnage] = useState<IHistoire | null>(null);
@@ -41,7 +42,7 @@ function HistoireDetail() {
     axios
       .get(
         // Appel l'API pour récupérer un personnage historique par son id
-        `https://histoireapi-e8czf4c8ehcvdgcw.canadacentral-01.azurewebsites.net/api/histoire/${id}`,
+        `${API_URL}/api/histoire/${id}`,
         { headers: { Authorization: `Bearer ${token}` } },
       )
       .then((res) => setPersonnage(res.data.histoire))
@@ -63,7 +64,7 @@ function HistoireDetail() {
     try {
       await axios.delete(
         // Appel l'api pour supprimer le personnage
-        `https://histoireapi-e8czf4c8ehcvdgcw.canadacentral-01.azurewebsites.net/api/histoire/supprimer/${id}`,
+        `${API_URL}/api/histoire/supprimer/${id}`,
         { headers: { Authorization: `Bearer ${token}` } },
       );
       alert(

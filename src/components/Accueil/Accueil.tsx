@@ -18,7 +18,7 @@ function Accueil() {
         {intl.formatMessage({
           id: 'accueil.description',
           defaultMessage:
-            "Plongez dans les récits, les personnages et les événements qui ont façonné l'histoire. Explorez un univers inspiré des vieux parchemins et des chroniques anciennes.",
+            "Plongez dans les personnages qui ont façonné l'histoire. Explorez un univers inspiré des vieux parchemins et des chroniques anciennes.",
         })}
       </p>
 

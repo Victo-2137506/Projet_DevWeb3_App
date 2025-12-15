@@ -14,6 +14,7 @@ function FormulaireModifier() {
   const { id } = useParams();
   // Hook pour l'intertionalisation
   const intl = useIntl();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // État du formulaire
   const [nom, setNom] = useState('');
@@ -36,7 +37,7 @@ function FormulaireModifier() {
       try {
         const response = await fetch(
           // Appel à l'API pour récupérer un personnage historique par son id
-          `https://histoireapi-e8czf4c8ehcvdgcw.canadacentral-01.azurewebsites.net/api/histoire/${id}`,
+          `${API_URL}/api/histoire/${id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },

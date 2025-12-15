@@ -23,6 +23,7 @@ export default function LoginProvider(props: any) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(true);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     // Token récupérer dans le localStorage
@@ -36,15 +37,12 @@ export default function LoginProvider(props: any) {
 
   async function login(email: string, password: string) {
     return axios
-      .post(
-        'https://histoireapi-e8czf4c8ehcvdgcw.canadacentral-01.azurewebsites.net/api/generatetoken',
-        {
-          userLogin: {
-            email,
-            password,
-          },
+      .post(`${API_URL}/api/generatetoken`, {
+        userLogin: {
+          email,
+          password,
         },
-      )
+      })
       .then((response) => {
         const { token } = response.data;
         console.log(token);

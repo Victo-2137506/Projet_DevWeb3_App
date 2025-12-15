@@ -13,6 +13,7 @@ function FormulaireAjout() {
   const navigate = useNavigate();
   // Hook pour la traduction
   const intl = useIntl();
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // États pour stocker les champs du formulaire
   const [nom, setNom] = useState('');
@@ -72,17 +73,14 @@ function FormulaireAjout() {
 
     try {
       // Requête POST vers l'API pour ajouter une personne historique
-      const response = await fetch(
-        `https://histoireapi-e8czf4c8ehcvdgcw.canadacentral-01.azurewebsites.net/api/histoire/ajouter`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(body),
+      const response = await fetch(`${API_URL}/api/histoire/ajouter`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify(body),
+      });
       // Si la requête a fontionné, retour à la liste des personnages historiques
       if (response.ok) {
         navigate('/histoire');
